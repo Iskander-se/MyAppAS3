@@ -1,0 +1,15 @@
+<resources>
+    <style name="FrameLayoutButtonStyle">
+        <item name="android:layout_width">20pt</item>
+        <item name="android:layout_height">32pt</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="ManualButtonStyle1" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">15pt</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="ManualButtonStyle2" parent="@style/ManualButtonStyle1">
+        <item name="android:layout_marginTop">16pt</item>
+    </style>
+</resources>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.ManualModeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutFL"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <ImageButton
+                android:id="@+id/btFrontLeftUp"
+                style="@style/ManualButtonStyle1"
+                android:contentDescription="@string/mvup"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btFrontLeftDown"
+                android:contentDescription="@string/mvdown"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutFC"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <ImageButton
+                style="@style/ManualButtonStyle1"
+                android:id="@+id/btFrontCenterUp"
+                android:contentDescription="@string/mvup"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btFrontCenterDown"
+                android:contentDescription="@string/mvdown"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutFR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <ImageButton
+                style="@style/ManualButtonStyle1"
+                android:id="@+id/btFrontRightUp"
+                android:contentDescription="@string/mvup"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btFrontRightDown"
+                android:contentDescription="@string/mvdown"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutRL"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85">
+
+            <ImageButton
+                style="@style/ManualButtonStyle1"
+                android:id="@+id/btRearLeftUp"
+                android:contentDescription="@string/mvup"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_up_float" />
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btRearLeftDown"
+                android:contentDescription="@string/mvdown"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutRC"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85">
+
+            <ImageButton
+                style="@style/ManualButtonStyle1"
+                android:id="@+id/btRearCenterUp"
+                android:contentDescription="@string/mvup"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btRearCenterDown"
+                android:contentDescription="@string/mvdown"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/FrameLayoutButtonStyle"
+            android:id="@+id/frameLayoutRR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85">
+
+            <ImageButton
+                style="@style/ManualButtonStyle1"
+                android:id="@+id/btRearRightUp"
+                android:contentDescription="@string/mvup"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@style/ManualButtonStyle2"
+                android:id="@+id/btRearRightDown"
+                android:contentDescription="@string/mvdown"
+                android:minHeight="48dp"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvFLm"
+            android:layout_width="40pt"
+            android:layout_height="18pt"
+            android:text="--"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayoutFC"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayoutFC"
+            app:layout_constraintStart_toEndOf="@+id/frameLayoutFL"
+            app:layout_constraintTop_toTopOf="@+id/frameLayoutFC" />
+
+        <TextView
+            android:id="@+id/tvFRm"
+            android:layout_width="40pt"
+            android:layout_height="18pt"
+            android:text="--"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayoutFC"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayoutFR"
+            app:layout_constraintStart_toEndOf="@+id/frameLayoutFC"
+            app:layout_constraintTop_toTopOf="@+id/frameLayoutFC" />
+
+        <TextView
+            android:id="@+id/tvRLm"
+            android:layout_width="40pt"
+            android:layout_height="18pt"
+            android:text="--"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayoutRC"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayoutRC"
+            app:layout_constraintStart_toEndOf="@+id/frameLayoutRL"
+            app:layout_constraintTop_toTopOf="@+id/frameLayoutRC" />
+
+        <TextView
+            android:id="@+id/tvRRm"
+            android:layout_width="40pt"
+            android:layout_height="18pt"
+            android:text="--"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayoutRC"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayoutRR"
+            app:layout_constraintStart_toEndOf="@+id/frameLayoutRC"
+            app:layout_constraintTop_toTopOf="@+id/frameLayoutRC" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
