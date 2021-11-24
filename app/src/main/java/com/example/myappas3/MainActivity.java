@@ -1,32 +1,28 @@
 package com.example.myappas3;
 
-import static com.example.myappas3.GlobalObjectVariables.*;
+import static com.example.myappas3.GlobalObjectVariables.SerialPack;
+import static com.example.myappas3.GlobalObjectVariables.mainHandler;
+
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myappas3.ui.main.SectionsPagerAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.myappas3.databinding.ActivityMainBinding;
+import com.example.myappas3.ui.main.SectionsPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mainHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                handleSIPmsg(msg);
+                handleAirECUmsg(msg);
             }
         };
     }
@@ -64,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,19 +86,39 @@ public class MainActivity extends AppCompatActivity {
         //processExtraData();
     }
 
-    public void handleSIPmsg(Message msg) {
+
+//@w:b:011001^
+
+
+
+    public void handleAirECUmsg(Message msg) {
         if (msg.obj != null) {
             if (msg.obj.getClass() == SerialPack.class) {
                 SerialPack UImsg = (SerialPack)msg.obj;
-                if(UImsg.type=='l'){
+                if(UImsg.type=='l'&&UImsg.part=='c'){
+                    int dataArray[] = HexUtil.DataToValue(UImsg.data);
                     TextView tvFLm = findViewById(R.id.tvFLm);
-                    tvFLm.setText("50%");
+                    tvFLm.setText(dataArray[0]+"%");
                     TextView tvFRm = findViewById(R.id.tvFRm);
-                    tvFRm.setText("50%");
+                    tvFRm.setText(dataArray[1]+"%");
                     TextView tvRLm = findViewById(R.id.tvRLm);
-                    tvRLm.setText("50%");
+                    tvRLm.setText(dataArray[2]+"%");
                     TextView tvRRm = findViewById(R.id.tvRRm);
-                    tvRRm.setText("50%");
+                    tvRRm.setText(dataArray[3]+"%");
+                }
+                else if(UImsg.type=='w'){
+                    char[] cVal= UImsg.data.toCharArray();
+                    ImageView VAGblockFL = findViewById(R.id.VAGblockFL);
+                    if(cVal[1]=='1') VAGblockFL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
+                    else             VAGblockFL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_invisible"));
+                    ImageView VAGblockFR = findViewById(R.id.VAGblockFR);
+                    if(cVal[2]=='1') VAGblockFR.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
+                    else             VAGblockFR.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_invisible"));
+                    ImageView VAGblockRL = findViewById(R.id.VAGblockFL);
+                    VAGblockRL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
+//@android:drawable/presence_online
+                    //@android:drawable/presence_invisible
+
                 }
 
             }

@@ -67,9 +67,10 @@ public class SerialService<QueueItem> extends Service {
 
         UsbSerialDriver driver=null;
         try {
-            driver = availableDrivers.get(0);
+            //driver = availableDrivers.get(0);
             for(UsbSerialDriver v : availableDrivers) {
                 if (v.getDevice().getProductId() == PID && v.getDevice().getVendorId() == VID) driver = v;
+                if (v.getDevice().getProductId() == 29987 && v.getDevice().getVendorId() == 6790) driver = v;
                 Log.v("USB",v.toString()+"{{{{"+v.toString()+"@@@@@@@");
             }
 
@@ -113,7 +114,7 @@ public class SerialService<QueueItem> extends Service {
 
     public SerialService() {
        // mainLooper = new Handler(Looper.getMainLooper());
-        qArray = new LinkedList<>();
+       // qArray = new LinkedList<>();
     }
 
     @Override
@@ -144,25 +145,38 @@ public class SerialService<QueueItem> extends Service {
 
                 @Override
                 public void onNewData(final byte[] data) {
-                    try {
-                        FqArray(data);
-                        pcmd.type='l';
-                        pcmd.part='b';
-                        pcmd.data="4B4A514D";
-                        Message msg =  mainHandler.obtainMessage(0, pcmd );
-                        mainHandler.sendMessage(msg);
-                        SerialService.this.usbSerialPort.write(data, 0);
-                        SerialService.this.usbSerialPort.write(pcmd.data.getBytes(), 0);
-                        SerialService.this.usbSerialPort.write("--@m1:1100^--".getBytes(), 0);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    FqArray(data);
                 }
             };
 
     private void FqArray(byte[] data)
     {
         qArray.add(data);
+        String dataStr="";
+        byte[] tmparr = qArray.poll();
+        int iterator=0;
+        for (int i = 0; i < tmparr.length; i++) {
+            char c = (char)tmparr[i];
+            if(c=='@') iterator=1;
+            if(iterator==2) pcmd.type=c;
+            if(iterator==4) pcmd.part=c;
+            if(c=='^') {
+                qArray.clear();
+                if(dataStr!="")
+                {   pcmd.data=dataStr;
+                    Message msg =  mainHandler.obtainMessage(0, pcmd );
+                    mainHandler.sendMessage(msg);
+                    return;
+                }
+
+            }
+            if(iterator>5){
+                dataStr = dataStr+Character.toString(c);
+            }
+            if(iterator>0) iterator++;
+
+        }
+
     }
 
     //
