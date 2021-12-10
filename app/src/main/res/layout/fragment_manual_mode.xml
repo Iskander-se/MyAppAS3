@@ -15,7 +15,7 @@
             android:id="@+id/frameLayoutFL"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintHorizontal_bias="0.20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.1">
@@ -63,7 +63,7 @@
             android:id="@+id/frameLayoutFR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintHorizontal_bias="0.80"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.1">
@@ -90,7 +90,7 @@
             android:id="@+id/frameLayoutRL"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintHorizontal_bias="0.20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.85">
@@ -140,7 +140,7 @@
             android:id="@+id/frameLayoutRR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintHorizontal_bias="0.80"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.85">
@@ -164,8 +164,7 @@
         <TextView
             android:id="@+id/tvFLm"
             android:layout_width="40pt"
-            android:layout_height="18pt"
-            android:text="--"
+            android:layout_height="15pt"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayoutFC"
@@ -176,8 +175,7 @@
         <TextView
             android:id="@+id/tvFRm"
             android:layout_width="40pt"
-            android:layout_height="18pt"
-            android:text="--"
+            android:layout_height="15pt"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayoutFC"
@@ -188,8 +186,7 @@
         <TextView
             android:id="@+id/tvRLm"
             android:layout_width="40pt"
-            android:layout_height="18pt"
-            android:text="--"
+            android:layout_height="15pt"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayoutRC"
@@ -200,8 +197,7 @@
         <TextView
             android:id="@+id/tvRRm"
             android:layout_width="40pt"
-            android:layout_height="18pt"
-            android:text="--"
+            android:layout_height="15pt"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayoutRC"

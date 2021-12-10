@@ -45,6 +45,8 @@ public class SerialService<QueueItem> extends Service {
         super.onCreate();
         this.context = this;
         serialPortConnected = false;
+
+
         Toast.makeText(this, "Служба создана",Toast.LENGTH_SHORT).show();
         Log.d(LogTAG, "Служба создана");
 
@@ -54,26 +56,19 @@ public class SerialService<QueueItem> extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         baudRate=9600;
-        VID=4292;
-        PID=60000;
+        VID=7855;
+        PID=0004;
         usbSerialPort = null;
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(usbManager);
-        if (availableDrivers.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "No serial USB devices!",
-                    Toast.LENGTH_SHORT).show();
-            return Service.START_REDELIVER_INTENT;
-        }
-
         UsbSerialDriver driver=null;
-        try {
-            //driver = availableDrivers.get(0);
-            for(UsbSerialDriver v : availableDrivers) {
-                if (v.getDevice().getProductId() == PID && v.getDevice().getVendorId() == VID) driver = v;
-                if (v.getDevice().getProductId() == 29987 && v.getDevice().getVendorId() == 6790) driver = v;
-                Log.v("USB",v.toString()+"{{{{"+v.toString()+"@@@@@@@");
-            }
 
+        try {
+         UsbDevice device = null;
+                for (UsbDevice v : usbManager.getDeviceList().values())
+                    if (v.getProductId() == PID && v.getVendorId() == VID)
+                        device = v;
+                    driver = CustomProber.getCustomProber().probeDevice(device);
         } catch (Exception ignored) {
             Toast.makeText(getApplicationContext(), "No correct serial USB devices!", Toast.LENGTH_SHORT).show();
             return Service.START_REDELIVER_INTENT;
@@ -101,7 +96,8 @@ public class SerialService<QueueItem> extends Service {
             usbSerialPort.setParameters(baudRate,8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             mSerialIoManager = new SerialInputOutputManager(usbSerialPort, mListener);
             mExecutor.submit(mSerialIoManager);
-            usbSerialPort.write("@m1:1100^".getBytes(), 0);
+            Log.d(LogTAG, "Порт открыт");
+            usbSerialPort.write("@l*:*^ @l*:*^".getBytes(), 0);
             /* TODO если служба остановлена, зарустить */
         } catch (IOException e) {
             // Print exception message
@@ -114,7 +110,6 @@ public class SerialService<QueueItem> extends Service {
 
     public SerialService() {
        // mainLooper = new Handler(Looper.getMainLooper());
-       // qArray = new LinkedList<>();
     }
 
     @Override
@@ -132,7 +127,7 @@ public class SerialService<QueueItem> extends Service {
     // @w:b:011001^
     // @l:c:4B4A514D^
 
-    Queue<byte[]> qArray = new LinkedList<byte[]>();
+    LinkedList<byte[]> qArray = new LinkedList<>();
 
     SerialPack pcmd = new SerialPack();
 
@@ -154,16 +149,24 @@ public class SerialService<QueueItem> extends Service {
         qArray.add(data);
         String dataStr="";
         byte[] tmparr = qArray.poll();
-        int iterator=0;
+
         for (int i = 0; i < tmparr.length; i++) {
             char c = (char)tmparr[i];
-            if(c=='@') iterator=1;
+            pcmd.raw=pcmd.raw+c;
+        }
+        char[] raw = pcmd.raw.toCharArray();
+            int iterator=0;
+        for (int i = 0; i < raw.length; i++) {
+            char c = raw[i];
+            if(c=='@') {iterator=1; dataStr="";}
             if(iterator==2) pcmd.type=c;
-            if(iterator==4) pcmd.part=c;
-            if(c=='^') {
+            else if(iterator==4) pcmd.part=c;
+            else if(c=='^') {
                 qArray.clear();
+                pcmd.raw=null;
                 if(dataStr!="")
                 {   pcmd.data=dataStr;
+                    Log.d(LogTAG, dataStr);
                     Message msg =  mainHandler.obtainMessage(0, pcmd );
                     mainHandler.sendMessage(msg);
                     return;

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 0x1a86 / 0x?523: Qinheng CH34x -->
-    <usb-device vendor-id="6790" product-id="21795" /> <!-- 0x5523: CH341A -->
-    <usb-device vendor-id="6790" product-id="29987" /> <!-- 0x7523: CH340 -->
-    <!-- 0x10C4 / 0xEA??: Silabs CP210x -->
-    <usb-device vendor-id="4292" product-id="60000" /> <!-- 0xea60: CP2102 and other CP210x single port devices -->
-    <usb-device vendor-id="4292" product-id="60016" /> <!-- 0xea70: CP2105 -->
-    <usb-device vendor-id="4292" product-id="60017" /> <!-- 0xea71: CP2108 -->
-
+    <!-- CDC driver -->
+    <usb-device vendor-id="5824" product-id="1505" /><!-- 0x16C0 / 0x05E1 Attiny85 Custom CDC -->
+    <usb-device vendor-id="7855" product-id="0004" /><!-- 0x1EAF / 0x0004 STM32 Maple CDC -->
 </resources>

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,7 +27,9 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String LogTAG = "UsbService";
     private ActivityMainBinding binding;
+    private int dataArray[];
 
     @Override
     protected void onStart() {
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mainHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                handleAirECUmsg(msg);
+                handleAirECU(msg);
             }
         };
     }
@@ -91,12 +94,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void handleAirECUmsg(Message msg) {
+    @SuppressLint("Range")
+    public void handleAirECU(Message msg) {
         if (msg.obj != null) {
             if (msg.obj.getClass() == SerialPack.class) {
                 SerialPack UImsg = (SerialPack)msg.obj;
-                if(UImsg.type=='l'&&UImsg.part=='c'){
-                    int dataArray[] = HexUtil.DataToValue(UImsg.data);
+                Log.d(LogTAG, UImsg.type+":"+UImsg.part+":"+UImsg.data);
+               if(UImsg.type=='l'&&UImsg.part=='c'){
+                   this.dataArray = HexUtil.DataToValue(UImsg.data);
                     TextView tvFLm = findViewById(R.id.tvFLm);
                     tvFLm.setText(dataArray[0]+"%");
                     TextView tvFRm = findViewById(R.id.tvFRm);
@@ -105,19 +110,40 @@ public class MainActivity extends AppCompatActivity {
                     tvRLm.setText(dataArray[2]+"%");
                     TextView tvRRm = findViewById(R.id.tvRRm);
                     tvRRm.setText(dataArray[3]+"%");
-                }
+               }
                 else if(UImsg.type=='w'){
                     char[] cVal= UImsg.data.toCharArray();
-                    ImageView VAGblockFL = findViewById(R.id.VAGblockFL);
-                    if(cVal[1]=='1') VAGblockFL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
-                    else             VAGblockFL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_invisible"));
-                    ImageView VAGblockFR = findViewById(R.id.VAGblockFR);
-                    if(cVal[2]=='1') VAGblockFR.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
-                    else             VAGblockFR.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_invisible"));
-                    ImageView VAGblockRL = findViewById(R.id.VAGblockFL);
-                    VAGblockRL.setImageDrawable(Drawable.createFromPath("@android:drawable/presence_online"));
-//@android:drawable/presence_online
-                    //@android:drawable/presence_invisible
+
+                    ImageView VAGblockIN = findViewById(R.id.easIN);
+                    ImageView VAGblockOUT = findViewById(R.id.easOUT);
+                    ImageView VAGblockB = findViewById(R.id.easB);
+                    VAGblockOUT.setAlpha(0F);
+                    VAGblockIN.setAlpha(0F);
+                    VAGblockB.setAlpha(0F);
+                    if(cVal[5]=='7'){
+                        VAGblockB.setAlpha(1F);
+                    }else if(cVal[0]=='2'){
+                        VAGblockOUT.setAlpha(1F);
+                    }else if(cVal[0]=='1') {
+                        if(cVal[5]=='0'){
+                            VAGblockIN.setAlpha(1F);
+                        }else{
+                            VAGblockIN.setAlpha(1F);
+                            VAGblockB.setAlpha(1F);
+                        }
+                    }else  if(cVal[5]=='1'){
+                        VAGblockIN.setAlpha(1F);
+                        VAGblockB.setAlpha(1F);
+                    }
+
+                    ImageView VAGblockFL = findViewById(R.id.easFL);
+                    VAGblockFL.setAlpha((float)(cVal[1]-48));
+                    ImageView VAGblockFR = findViewById(R.id.easFR);
+                    VAGblockFR.setAlpha((float)(cVal[2]-48));
+                    ImageView VAGblockRL = findViewById(R.id.easRL);
+                    VAGblockRL.setAlpha((float)(cVal[3]-48));
+                    ImageView VAGblockRR = findViewById(R.id.easRR);
+                    VAGblockRR.setAlpha((float)(cVal[4]-48));
 
                 }
 
